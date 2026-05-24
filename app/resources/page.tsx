@@ -7,6 +7,8 @@ import { ResourceCard } from "@/components/ResourceCard";
 import { FilterTabs } from "@/components/FilterTabs";
 import { resources } from "@/lib/data";
 import Fuse from "fuse.js";
+import { pageContainer } from "@/lib/layout";
+import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const resourceTabs = ["All", "Roadmaps", "Cheatsheets", "Notes", "Guides", "Tools"];
 
@@ -36,14 +38,9 @@ export default function ResourcesPage() {
 
   return (
     <div className="min-h-screen py-12 w-full">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12">
+      <div className={pageContainer}>
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="mb-8"
-        >
+        <motion.div {...fadeUpMountProps(0)} className="mb-8">
           <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-2">
             Resources
           </h1>
@@ -53,12 +50,7 @@ export default function ResourcesPage() {
         </motion.div>
 
         {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
-          className="mb-6"
-        >
+        <motion.div {...fadeUpMountProps(0.1)} className="mb-6">
           <div className="relative max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
@@ -72,12 +64,7 @@ export default function ResourcesPage() {
         </motion.div>
 
         {/* Filter Tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          className="mb-8"
-        >
+        <motion.div {...fadeUpMountProps(0.2)} className="mb-8">
           <FilterTabs
             tabs={resourceTabs}
             active={activeTab}
@@ -88,7 +75,7 @@ export default function ResourcesPage() {
         {/* Resources Grid */}
         {filteredResources.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredResources.map((resource) => (
+            {filteredResources.map((resource, index) => (
               <ResourceCard
                 key={resource.slug}
                 title={resource.title}
@@ -97,6 +84,7 @@ export default function ResourcesPage() {
                 image={resource.image}
                 description={resource.description}
                 downloadUrl={resource.downloadUrl}
+                animationDelay={listStaggerDelay(index)}
               />
             ))}
           </div>

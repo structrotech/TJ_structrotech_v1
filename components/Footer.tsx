@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Github, Linkedin, Twitter, Youtube } from "lucide-react";
+import { pageContainer } from "@/lib/layout";
 
 const learningLinks = [
   { href: "/categories/ai", label: "AI" },
@@ -39,7 +40,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="bg-[rgba(5,8,22,0.95)] dark:bg-[rgba(5,8,22,0.95)] bg-card border-t border-border">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 py-12">
+      <div className={`${pageContainer} py-12`}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Logo & Social */}
           <div className="lg:col-span-1">

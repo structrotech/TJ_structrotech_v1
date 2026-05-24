@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import { posts } from "@/lib/data";
+import { posts, categories } from "@/lib/data";
 import type { Post } from "@/types/sanity";
 
 const fuse = new Fuse(posts, {
@@ -16,7 +16,16 @@ export function searchPosts(query: string): Post[] {
 
 export function filterPostsByCategory(posts: Post[], category: string): Post[] {
   if (category === "All") return posts;
-  return posts.filter((post) => post.category === category || post.categorySlug === category.toLowerCase());
+
+  const matchedCategory = categories.find((c) => c.title === category);
+  if (matchedCategory) {
+    return posts.filter((post) => post.categorySlug === matchedCategory.slug);
+  }
+
+  const slug = category.toLowerCase().replace(/\s+/g, "-");
+  return posts.filter(
+    (post) => post.category === category || post.categorySlug === slug
+  );
 }
 
 export function sortPosts(posts: Post[], sortBy: string): Post[] {
@@ -30,7 +39,12 @@ export function sortPosts(posts: Post[], sortBy: string): Post[] {
     case "A-Z":
       return sorted.sort((a, b) => a.title.localeCompare(b.title));
     case "Most Popular":
-      return sorted; // Would need view count data
+      return sorted.sort((a, b) => {
+        if (Boolean(a.featured) !== Boolean(b.featured)) {
+          return a.featured ? -1 : 1;
+        }
+        return b.readTime - a.readTime;
+      });
     case "Beginner Friendly":
       return sorted.sort((a, b) => a.readTime - b.readTime);
     default:

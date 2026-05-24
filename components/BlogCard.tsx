@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { fadeUpInViewProps } from "@/lib/motion";
 import type { Author } from "@/types/sanity";
 
 interface BlogCardProps {
@@ -15,6 +16,7 @@ interface BlogCardProps {
   readTime: number;
   excerpt: string;
   category: string;
+  animationDelay?: number;
 }
 
 export function BlogCard({
@@ -26,6 +28,7 @@ export function BlogCard({
   readTime,
   excerpt,
   category,
+  animationDelay = 0,
 }: BlogCardProps) {
   const formattedDate = new Date(publishedAt).toLocaleDateString("en-US", {
     month: "short",
@@ -34,12 +37,7 @@ export function BlogCard({
   });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-    >
+    <motion.div {...fadeUpInViewProps(animationDelay)}>
       <Link href={`/blogs/${slug}`}>
         <article className="group rounded-2xl overflow-hidden border border-border bg-card backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]">
           {/* Cover Image */}

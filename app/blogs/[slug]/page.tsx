@@ -8,6 +8,7 @@ import { AffiliateBox } from "@/components/AffiliateBox";
 import { SponsorBanner } from "@/components/SponsorBanner";
 import { DownloadSection } from "@/components/DownloadSection";
 import { BlogCard } from "@/components/BlogCard";
+import { pageContainer } from "@/lib/layout";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -39,7 +40,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen py-12 w-full">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12">
+      <div className={pageContainer}>
         <div className="max-w-4xl mx-auto w-full">
         {/* Top Ad */}
         <AdBanner position="top" />

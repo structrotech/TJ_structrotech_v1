@@ -50,13 +50,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="bg-background" suppressHydrationWarning>
+    <html lang="en" className="bg-background w-full" suppressHydrationWarning>
       <body className={`${manrope.variable} font-sans antialiased min-h-screen flex flex-col w-full`}>
         <ThemeProvider>
           <AmbientBackground />
           <Navbar />
-          <main className="max-w-7xl mx-auto w-full">
-            <div className="min-h-screen w-full overflow-x-hidden">{children}</div>
+          <main className="flex-1 pt-16 w-full">
+            <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden">{children}</div>
           </main>
           <Footer />
         </ThemeProvider>

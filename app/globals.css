@@ -3,6 +3,7 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
 :root {
   --background: #f5f0eb;
   --foreground: #1e1b2e;
@@ -91,6 +92,9 @@
     padding: 0;
   }
   html {
+    width: 100%;
+    margin: 0;
+    padding: 0;
     scroll-behavior: smooth;
   }
 }

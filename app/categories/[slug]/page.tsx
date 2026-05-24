@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { BlogCard } from "@/components/BlogCard";
 import { categories, posts } from "@/lib/data";
+import { pageContainer } from "@/lib/layout";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -26,7 +27,7 @@ export default async function CategoryDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen py-12 w-full">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12">
+      <div className={pageContainer}>
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
           <Link href="/" className="hover:text-foreground transition-colors">

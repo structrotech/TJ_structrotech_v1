@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { fadeUpInViewProps } from "@/lib/motion";
 
 interface CategoryCardProps {
   title: string;
@@ -11,6 +12,7 @@ interface CategoryCardProps {
   badge: string;
   articleCount: number;
   description: string;
+  animationDelay?: number;
 }
 
 export function CategoryCard({
@@ -19,17 +21,12 @@ export function CategoryCard({
   image,
   badge,
   articleCount,
+  animationDelay = 0,
 }: CategoryCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-    >
+    <motion.div {...fadeUpInViewProps(animationDelay)}>
       <Link href={`/categories/${slug}`}>
         <div className="group relative h-[220px] rounded-2xl overflow-hidden border border-border hover:border-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]">
-          {/* Background Image */}
           <Image
             src={image}
             alt={title}
@@ -38,7 +35,6 @@ export function CategoryCard({
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           />
 
-          {/* Gradient Overlay */}
           <div
             className="absolute inset-0"
             style={{
@@ -47,14 +43,12 @@ export function CategoryCard({
             }}
           />
 
-          {/* Badge */}
           <div className="absolute top-3 left-3">
             <span className="px-2 py-1 text-xs font-medium bg-black/60 text-white rounded-full backdrop-blur-sm">
               {badge}
             </span>
           </div>
 
-          {/* Content */}
           <div className="absolute bottom-3 left-3 right-3">
             <h3 className="text-base font-bold text-white mb-1">{title}</h3>
             <p className="text-xs text-muted-foreground">

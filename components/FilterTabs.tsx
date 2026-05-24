@@ -10,7 +10,7 @@ interface FilterTabsProps {
 
 export function FilterTabs({ tabs, active, onChange }: FilterTabsProps) {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3 justify-start w-full">
       {tabs.map((tab) => (
         <button
           key={tab}

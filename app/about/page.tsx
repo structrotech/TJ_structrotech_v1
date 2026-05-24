@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Target, Eye, Heart, Lightbulb, Users, Shield } from "lucide-react";
+import { pageContainer } from "@/lib/layout";
+import { fadeUpInViewProps, fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const values = [
   {
@@ -40,14 +42,8 @@ const values = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen py-12 w-full">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12">
-        {/* Mission Statement */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="text-center mb-16"
-        >
+      <div className={pageContainer}>
+        <motion.section {...fadeUpMountProps(0)} className="text-center mb-16">
           <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-4">
             About StructroTech
           </h1>
@@ -56,14 +52,7 @@ export default function AboutPage() {
           </p>
         </motion.section>
 
-        {/* Vision */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="mb-16"
-        >
+        <motion.section {...fadeUpInViewProps(0)} className="mb-16">
           <div className="p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-2 rounded-xl bg-primary/10">
@@ -77,23 +66,13 @@ export default function AboutPage() {
           </div>
         </motion.section>
 
-        {/* Values */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="mb-16"
-        >
+        <motion.section {...fadeUpInViewProps(0)} className="mb-16">
           <h2 className="text-2xl font-bold text-foreground mb-8 text-center">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {values.map((value, index) => (
               <motion.div
                 key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
+                {...fadeUpInViewProps(listStaggerDelay(index))}
                 className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors"
               >
                 <div className="p-2 rounded-xl bg-primary/10 w-fit mb-4">
@@ -106,14 +85,7 @@ export default function AboutPage() {
           </div>
         </motion.section>
 
-        {/* CTA */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-center"
-        >
+        <motion.section {...fadeUpInViewProps(0)} className="text-center">
           <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Ready to Start Learning?

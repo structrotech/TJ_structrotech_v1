@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Download } from "lucide-react";
+import { fadeUpInViewProps } from "@/lib/motion";
 
 interface ResourceCardProps {
   title: string;
@@ -12,6 +13,7 @@ interface ResourceCardProps {
   image: string;
   description: string;
   downloadUrl?: string;
+  animationDelay?: number;
 }
 
 export function ResourceCard({
@@ -21,14 +23,10 @@ export function ResourceCard({
   image,
   description,
   downloadUrl,
+  animationDelay = 0,
 }: ResourceCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
-    >
+    <motion.div {...fadeUpInViewProps(animationDelay)}>
       <Link href={`/resources/${slug}`}>
         <article className="group rounded-2xl overflow-hidden border border-border bg-card backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]">
           {/* Cover Image */}

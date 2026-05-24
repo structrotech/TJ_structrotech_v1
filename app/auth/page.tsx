@@ -3,19 +3,16 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { pageContainer } from "@/lib/layout";
+import { fadeUpMountProps } from "@/lib/motion";
 
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(true);
 
   return (
     <div className="min-h-screen py-12 w-full flex items-center justify-center">
-      <div className="max-w-7xl mx-auto w-full px-6 md:px-12 flex justify-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-md"
-      >
+      <div className={`${pageContainer} flex justify-center`}>
+      <motion.div {...fadeUpMountProps(0)} className="w-full max-w-md">
         <div className="p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-xl">
           {/* Header */}
           <div className="text-center mb-8">
