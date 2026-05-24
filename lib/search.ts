@@ -1,6 +1,6 @@
 import Fuse from "fuse.js";
 import { posts, categories } from "@/lib/data";
-import type { Post } from "@/types/sanity";
+import type { Post, Resource } from "@/types/sanity";
 
 const fuse = new Fuse(posts, {
   keys: ["title", "excerpt", "category"],
@@ -49,5 +49,29 @@ export function sortPosts(posts: Post[], sortBy: string): Post[] {
       return sorted.sort((a, b) => a.readTime - b.readTime);
     default:
       return sorted;
+  }
+}
+
+export function sortResources(resources: Resource[], sortBy: string): Resource[] {
+  const sorted = [...resources];
+
+  switch (sortBy) {
+    case "Z-A":
+      return sorted.sort((a, b) => b.title.localeCompare(a.title));
+    case "By Type":
+      return sorted.sort((a, b) => {
+        const byType = a.type.localeCompare(b.type);
+        return byType !== 0 ? byType : a.title.localeCompare(b.title);
+      });
+    case "Downloads First":
+      return sorted.sort((a, b) => {
+        const aHas = Boolean(a.downloadUrl);
+        const bHas = Boolean(b.downloadUrl);
+        if (aHas !== bHas) return aHas ? -1 : 1;
+        return a.title.localeCompare(b.title);
+      });
+    case "A-Z":
+    default:
+      return sorted.sort((a, b) => a.title.localeCompare(b.title));
   }
 }

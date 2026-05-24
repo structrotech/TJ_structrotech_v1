@@ -5,7 +5,14 @@ import { motion } from "framer-motion";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
 import { categories } from "@/lib/data";
-import { pageContainer } from "@/lib/layout";
+import {
+  pageContainer,
+  pageShell,
+  pageHeaderBlock,
+  pageTitle,
+  pageSubtitle,
+  pageControlsRow,
+} from "@/lib/layout";
 import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
@@ -19,26 +26,25 @@ export default function CategoriesPage() {
   });
 
   return (
-    <div className="min-h-screen py-12 w-full">
+    <div className={pageShell}>
       <div className={pageContainer}>
-        <motion.div {...fadeUpMountProps(0)} className="mb-8">
-          <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-2">
-            All Categories
-          </h1>
-          <p className="text-muted-foreground">
+        <motion.div {...fadeUpMountProps(0)} className={pageHeaderBlock}>
+          <h1 className={pageTitle}>All Categories</h1>
+          <p className={pageSubtitle}>
             Explore our comprehensive collection of learning resources
           </p>
         </motion.div>
 
-        <motion.div {...fadeUpMountProps(0.1)} className="mb-8 w-full">
+        <motion.div {...fadeUpMountProps(0.1)} className={pageControlsRow}>
           <FilterTabs
             tabs={categoryTabs}
             active={activeTab}
             onChange={setActiveTab}
+            align="center"
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
           {filteredCategories.map((category, index) => (
             <CategoryCard
               key={category.slug}

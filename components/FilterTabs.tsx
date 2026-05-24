@@ -6,11 +6,22 @@ interface FilterTabsProps {
   tabs: string[];
   active: string;
   onChange: (tab: string) => void;
+  align?: "start" | "center";
 }
 
-export function FilterTabs({ tabs, active, onChange }: FilterTabsProps) {
+export function FilterTabs({
+  tabs,
+  active,
+  onChange,
+  align = "start",
+}: FilterTabsProps) {
   return (
-    <div className="flex flex-wrap gap-3 justify-start w-full">
+    <div
+      className={cn(
+        "flex flex-wrap gap-3 w-full",
+        align === "center" ? "justify-center" : "justify-start"
+      )}
+    >
       {tabs.map((tab) => (
         <button
           key={tab}

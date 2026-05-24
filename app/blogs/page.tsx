@@ -8,7 +8,15 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import { posts, categories } from "@/lib/data";
 import { searchPosts, filterPostsByCategory, sortPosts } from "@/lib/search";
-import { pageContainer } from "@/lib/layout";
+import {
+  pageContainer,
+  pageShell,
+  pageHeaderBlock,
+  pageTitle,
+  pageSubtitle,
+  pageSearchRow,
+  pageFiltersRow,
+} from "@/lib/layout";
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", ...categories.slice(0, 5).map((c) => c.title)];
@@ -41,21 +49,17 @@ export default function BlogsPage() {
   };
 
   return (
-    <div className="min-h-screen py-12 w-full">
+    <div className={pageShell}>
       <div className={pageContainer}>
-        {/* Header */}
-        <motion.div {...fadeUpMountProps(0)} className="mb-8">
-          <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-2">
-            Blogs & Articles
-          </h1>
-          <p className="text-muted-foreground">
+        <motion.div {...fadeUpMountProps(0)} className={pageHeaderBlock}>
+          <h1 className={pageTitle}>Blogs & Articles</h1>
+          <p className={pageSubtitle}>
             Discover tutorials, guides, and insights from our experts
           </p>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div {...fadeUpMountProps(0.1)} className="mb-6">
-          <div className="relative max-w-md">
+        <motion.div {...fadeUpMountProps(0.1)} className={pageSearchRow}>
+          <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
@@ -67,11 +71,7 @@ export default function BlogsPage() {
           </div>
         </motion.div>
 
-        {/* Filters Row */}
-        <motion.div
-          {...fadeUpMountProps(0.2)}
-          className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
-        >
+        <motion.div {...fadeUpMountProps(0.2)} className={pageFiltersRow}>
           <FilterTabs
             tabs={categoryTabs}
             active={activeCategory}
@@ -85,7 +85,6 @@ export default function BlogsPage() {
           />
         </motion.div>
 
-        {/* Blog Grid */}
         {visiblePosts.length > 0 ? (
           <div
             key={`${activeCategory}-${sortBy}-${searchQuery}`}
@@ -114,7 +113,6 @@ export default function BlogsPage() {
           </div>
         )}
 
-        {/* Load More */}
         {hasMore && (
           <motion.div {...fadeUpInViewProps(0)} className="mt-10 text-center">
             <button

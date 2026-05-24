@@ -3,7 +3,13 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Target, Eye, Heart, Lightbulb, Users, Shield } from "lucide-react";
-import { pageContainer } from "@/lib/layout";
+import {
+  pageContainer,
+  pageShell,
+  pageHeaderBlock,
+  pageTitle,
+  pageSubtitle,
+} from "@/lib/layout";
 import { fadeUpInViewProps, fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const values = [
@@ -41,27 +47,30 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen py-12 w-full">
+    <div className={pageShell}>
       <div className={pageContainer}>
-        <motion.section {...fadeUpMountProps(0)} className="text-center mb-16">
-          <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-4">
-            About StructroTech
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            We believe that quality tech education should be accessible to everyone. Our mission is to provide clear, structured, and practical learning resources for aspiring developers and IT professionals.
+        <motion.section {...fadeUpMountProps(0)} className={`${pageHeaderBlock} md:mb-16`}>
+          <h1 className={pageTitle}>About StructroTech</h1>
+          <p className={pageSubtitle}>
+            We believe that quality tech education should be accessible to everyone. Our
+            mission is to provide clear, structured, and practical learning resources for
+            aspiring developers and IT professionals.
           </p>
         </motion.section>
 
         <motion.section {...fadeUpInViewProps(0)} className="mb-16">
-          <div className="p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="mx-auto max-w-3xl p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm text-center">
+            <div className="flex flex-col items-center gap-3 mb-4">
               <div className="p-2 rounded-xl bg-primary/10">
                 <Eye className="w-6 h-6 text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-foreground">Our Vision</h2>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              To become the go-to platform for structured technology education, empowering millions of learners worldwide to master AI, Cybersecurity, Linux, Cloud Computing, and more. We envision a world where anyone, regardless of background, can acquire the skills needed to thrive in the tech industry.
+              To become the go-to platform for structured technology education, empowering
+              millions of learners worldwide to master AI, Cybersecurity, Linux, Cloud
+              Computing, and more. We envision a world where anyone, regardless of
+              background, can acquire the skills needed to thrive in the tech industry.
             </p>
           </div>
         </motion.section>
@@ -73,9 +82,9 @@ export default function AboutPage() {
               <motion.div
                 key={value.title}
                 {...fadeUpInViewProps(listStaggerDelay(index))}
-                className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors"
+                className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-colors text-center"
               >
-                <div className="p-2 rounded-xl bg-primary/10 w-fit mb-4">
+                <div className="p-2 rounded-xl bg-primary/10 w-fit mb-4 mx-auto">
                   <value.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">{value.title}</h3>
@@ -85,8 +94,8 @@ export default function AboutPage() {
           </div>
         </motion.section>
 
-        <motion.section {...fadeUpInViewProps(0)} className="text-center">
-          <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20">
+        <motion.section {...fadeUpInViewProps(0)} className="text-center pb-4">
+          <div className="mx-auto max-w-xl p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Ready to Start Learning?
             </h2>

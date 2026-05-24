@@ -5,12 +5,23 @@ import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { ResourceCard } from "@/components/ResourceCard";
 import { FilterTabs } from "@/components/FilterTabs";
+import { SortSelect } from "@/components/SortSelect";
 import { resources } from "@/lib/data";
+import { sortResources } from "@/lib/search";
 import Fuse from "fuse.js";
-import { pageContainer } from "@/lib/layout";
+import {
+  pageContainer,
+  pageShell,
+  pageHeaderBlock,
+  pageTitle,
+  pageSubtitle,
+  pageSearchRow,
+  pageFiltersRow,
+} from "@/lib/layout";
 import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const resourceTabs = ["All", "Roadmaps", "Cheatsheets", "Notes", "Guides", "Tools"];
+const resourceSortOptions = ["A-Z", "Z-A", "By Type", "Downloads First"];
 
 const fuse = new Fuse(resources, {
   keys: ["title", "description", "type"],
@@ -20,6 +31,7 @@ const fuse = new Fuse(resources, {
 export default function ResourcesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("All");
+  const [sortBy, setSortBy] = useState("A-Z");
 
   const filteredResources = useMemo(() => {
     let result = resources;
@@ -33,25 +45,27 @@ export default function ResourcesPage() {
       result = result.filter((resource) => resource.type === activeTab);
     }
 
-    return result;
-  }, [searchQuery, activeTab]);
+    return sortResources(result, sortBy);
+  }, [searchQuery, activeTab, sortBy]);
+
+  const handleSortChange = (nextSort: string) => {
+    setSortBy(nextSort);
+  };
+
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab);
+  };
 
   return (
-    <div className="min-h-screen py-12 w-full">
+    <div className={pageShell}>
       <div className={pageContainer}>
-        {/* Header */}
-        <motion.div {...fadeUpMountProps(0)} className="mb-8">
-          <h1 className="text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-2">
-            Resources
-          </h1>
-          <p className="text-muted-foreground">
-            Cheatsheets, Roadmaps, Guides and more
-          </p>
+        <motion.div {...fadeUpMountProps(0)} className={pageHeaderBlock}>
+          <h1 className={pageTitle}>Resources</h1>
+          <p className={pageSubtitle}>Cheatsheets, Roadmaps, Guides and more</p>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div {...fadeUpMountProps(0.1)} className="mb-6">
-          <div className="relative max-w-md">
+        <motion.div {...fadeUpMountProps(0.1)} className={pageSearchRow}>
+          <div className="relative w-full max-w-md">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <input
               type="text"
@@ -63,18 +77,25 @@ export default function ResourcesPage() {
           </div>
         </motion.div>
 
-        {/* Filter Tabs */}
-        <motion.div {...fadeUpMountProps(0.2)} className="mb-8">
+        <motion.div {...fadeUpMountProps(0.2)} className={pageFiltersRow}>
           <FilterTabs
             tabs={resourceTabs}
             active={activeTab}
-            onChange={setActiveTab}
+            onChange={handleTabChange}
+          />
+          <SortSelect
+            value={sortBy}
+            options={resourceSortOptions}
+            onChange={handleSortChange}
+            label="Sort resources"
           />
         </motion.div>
 
-        {/* Resources Grid */}
         {filteredResources.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div
+            key={`${activeTab}-${sortBy}-${searchQuery}`}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
             {filteredResources.map((resource, index) => (
               <ResourceCard
                 key={resource.slug}
