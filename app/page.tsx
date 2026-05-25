@@ -28,14 +28,6 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative pt-44 pb-20 overflow-hidden w-full">
         <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px)`,
-            backgroundSize: "24px 24px",
-          }}
-        />
-
-        <div
           className={`relative ${pageContainer} flex flex-col items-center justify-center text-center`}
         >
           <motion.div {...fadeUpMountProps(0)} className="w-full">
