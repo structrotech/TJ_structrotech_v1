@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background w-full" suppressHydrationWarning>
       <body
-        className={`${manrope.variable} font-manrope antialiased min-h-screen flex flex-col w-full m-0 p-0`}
+        className={`${manrope.variable} font-sans antialiased min-h-screen flex flex-col w-full m-0 p-0`}
       >
         <ThemeProvider>
           <ScrollToTop />
