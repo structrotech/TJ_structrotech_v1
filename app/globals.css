@@ -79,8 +79,16 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 @layer base {
@@ -88,10 +96,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply text-foreground;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+    @apply font-manrope text-foreground;
     background-color: #f5f0eb;
     background-image:
       radial-gradient(ellipse 60% 50% at 10% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 70%),
@@ -124,9 +129,6 @@
   }
 
   html {
-    width: 100%;
-    margin: 0;
-    padding: 0;
     scroll-behavior: smooth;
   }
 

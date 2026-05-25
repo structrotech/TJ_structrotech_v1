@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
+import { navbarContainer } from "@/lib/layout";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -39,17 +40,16 @@ export function Navbar() {
 
   return (
     <>
-      <header className="fixed top-3 left-4 right-4 z-50">
+      <header className="fixed top-3 left-0 right-0 z-50 w-full px-4">
         <nav
           className={cn(
-            "rounded-full border backdrop-blur-xl shadow-lg overflow-hidden",
+            "mx-auto max-w-[1400px] rounded-full border backdrop-blur-xl shadow-lg overflow-hidden",
             "bg-[#f5f0eb]/95 border-black/10",
             "dark:bg-[#0f1117]/80 dark:border-white/10"
           )}
           aria-label="Main navigation"
         >
-          <div className="flex h-14 md:h-[4.25rem] items-center justify-between gap-3 px-5 md:px-8">
-            {/* Logo */}
+          <div className={cn(navbarContainer, "h-14 md:h-[4.25rem] gap-3")}>
             <Link
               href="/"
               className="flex shrink-0 items-center gap-0"
@@ -61,7 +61,6 @@ export function Navbar() {
               <span className="text-lg font-bold text-accent md:text-xl">Tech</span>
             </Link>
 
-            {/* Desktop links — center */}
             <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -82,7 +81,6 @@ export function Navbar() {
               })}
             </div>
 
-            {/* Right — toggle + sign up + hamburger */}
             <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
               <ThemeToggle />
               <Link
@@ -94,7 +92,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
-                className="rounded-lg p-2 text-foreground transition-colors hover:bg-white/10 md:hidden dark:hover:bg-white/10"
+                className="rounded-lg p-2 text-foreground transition-colors hover:bg-black/10 md:hidden dark:hover:bg-white/10"
                 aria-label="Open menu"
                 aria-expanded={isOpen}
               >
@@ -105,7 +103,7 @@ export function Navbar() {
         </nav>
       </header>
 
-      {/* Mobile drawer */}
+      {/* Mobile floating card menu */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -115,19 +113,21 @@ export function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-[99] bg-black/60 md:hidden"
+              className="fixed inset-0 z-[99] bg-black/50 md:hidden"
               aria-label="Close menu"
               onClick={closeMenu}
             />
 
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, scale: 0.95, y: -8 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "fixed inset-0 z-[100] flex h-full w-full flex-col overflow-hidden md:hidden",
-                "bg-[#f5f0eb] dark:bg-[#0f1117]"
+                "fixed top-16 left-4 right-4 z-[100] md:hidden",
+                "rounded-2xl border p-6 shadow-2xl",
+                "bg-white border-black/10",
+                "dark:bg-[#0f1117] dark:border-white/10"
               )}
               role="dialog"
               aria-modal="true"
@@ -136,42 +136,40 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={closeMenu}
-                className="absolute top-6 right-6 rounded-lg p-2 text-foreground transition-colors hover:bg-black/10 dark:hover:bg-white/10"
+                className="absolute top-4 right-4 rounded-lg p-1.5 text-foreground transition-colors hover:bg-black/10 dark:hover:bg-white/10"
                 aria-label="Close menu"
               >
-                <X className="h-7 w-7" />
+                <X className="h-5 w-5" />
               </button>
 
-              <div className="flex flex-1 flex-col items-center justify-center px-6">
-                <nav className="flex w-full max-w-sm flex-col">
-                  {navLinks.map((link) => {
-                    const isActive = pathname === link.href;
-                    return (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        onClick={closeMenu}
-                        className={cn(
-                          "w-full py-4 text-center text-xl font-medium transition-colors",
-                          isActive
-                            ? "text-primary"
-                            : "text-foreground hover:text-primary"
-                        )}
-                      >
-                        {link.label}
-                      </Link>
-                    );
-                  })}
-                </nav>
+              <nav className="mt-2 flex flex-col">
+                {navLinks.map((link) => {
+                  const isActive = pathname === link.href;
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={closeMenu}
+                      className={cn(
+                        "py-3 text-lg font-medium transition-colors",
+                        isActive
+                          ? "text-primary"
+                          : "text-foreground hover:text-primary"
+                      )}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </nav>
 
-                <Link
-                  href="/auth"
-                  onClick={closeMenu}
-                  className="mt-6 inline-flex items-center rounded-full border border-accent px-8 py-3 text-lg font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
-                >
-                  Sign Up
-                </Link>
-              </div>
+              <Link
+                href="/auth"
+                onClick={closeMenu}
+                className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-accent py-3 text-base font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                Sign Up
+              </Link>
             </motion.div>
           </>
         )}

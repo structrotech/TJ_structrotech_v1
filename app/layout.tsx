@@ -52,14 +52,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background w-full" suppressHydrationWarning>
-      <body className={`${manrope.variable} font-sans antialiased min-h-screen flex flex-col w-full`}>
+      <body
+        className={`${manrope.variable} font-manrope antialiased min-h-screen flex flex-col w-full m-0 p-0`}
+      >
         <ThemeProvider>
           <ScrollToTop />
           <AmbientBackground />
-          <Navbar />
-          <main className="flex-1 w-full pt-[5.5rem] md:pt-24">
-            <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden">{children}</div>
-          </main>
+          <div className="flex min-h-screen w-full max-w-[1400px] flex-col mx-auto">
+            <Navbar />
+            <main className="flex-1 w-full pt-[5.5rem] md:pt-24">
+              <div className="min-h-screen w-full overflow-x-hidden">{children}</div>
+            </main>
+          </div>
           <Footer />
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
