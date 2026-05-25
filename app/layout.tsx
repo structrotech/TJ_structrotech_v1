@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import ScrollToTop from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -52,6 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background w-full" suppressHydrationWarning>
       <body className={`${manrope.variable} font-sans antialiased min-h-screen flex flex-col w-full`}>
+        <ScrollToTop />
         <ThemeProvider>
           <AmbientBackground />
           <Navbar />
