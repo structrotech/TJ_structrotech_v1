@@ -128,17 +128,17 @@ export function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="flex w-full flex-col items-center text-center sm:items-start sm:text-left">
+          <div className="flex w-full flex-col items-start text-left">
             <h3 className="mb-3 w-full text-sm font-bold text-foreground">Newsletter</h3>
-            <p className="mb-4 w-full text-sm font-normal text-muted-foreground">
+            <p className="mb-4 w-full max-w-[280px] text-sm font-normal text-muted-foreground">
               Get the latest articles, resources and updates.
             </p>
             <form
-              className="w-full max-w-full"
+              className="w-full max-w-[280px] self-start"
               onSubmit={(e) => e.preventDefault()}
               aria-label="Newsletter signup"
             >
-              <div className={cn(inputCardClass, "flex items-center gap-2 pr-1.5 pl-4")}>
+              <div className={cn(inputCardClass, "flex w-full items-center gap-2 pl-3 pr-1.5")}>
                 <input
                   type="email"
                   placeholder="Enter your email..."
@@ -159,7 +159,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] pt-8 text-center dark:border-white/[0.06] md:flex-row md:text-left">
           <p className="text-sm font-normal text-muted-foreground">
-            &copy; 2025 StructroTech All rights reserved
+            &copy; 2026 StructroTech. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-sm font-normal text-muted-foreground md:justify-end">
             <Link href="/privacy" className="transition-colors hover:text-primary">
