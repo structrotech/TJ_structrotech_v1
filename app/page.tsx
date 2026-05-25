@@ -39,24 +39,22 @@ export default function HomePage() {
           className={`relative ${pageContainer} flex flex-col items-center justify-center text-center`}
         >
           <motion.div {...fadeUpMountProps(0)} className="w-full">
-            <h1 className="w-full text-center text-[clamp(36px,5vw,64px)] font-extrabold leading-tight mb-4">
-              <span className="text-foreground">Welcome to </span>
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                StructroTech
-              </span>
+            <h1 className="font-serif w-full text-center text-[clamp(40px,5vw,72px)] font-semibold leading-[1.1] tracking-normal text-foreground mb-5">
+              Welcome to{" "}
+              <span className="text-primary">StructroTech</span>
             </h1>
           </motion.div>
 
           <motion.p
             {...fadeUpMountProps(0.1)}
-            className="w-full text-center text-xl text-muted-foreground font-normal mb-2"
+            className="w-full text-center text-[17px] md:text-[18px] font-light text-muted-foreground mb-3 max-w-[500px] mx-auto leading-relaxed"
           >
-            Simple, Structured learning.
+            Simple, structured learning.
           </motion.p>
 
           <motion.p
             {...fadeUpMountProps(0.2)}
-            className="w-full text-center text-base text-muted-foreground mb-8 max-w-2xl mx-auto"
+            className="w-full text-center text-[17px] md:text-[18px] font-light text-muted-foreground mb-8 max-w-[500px] mx-auto leading-relaxed"
           >
             Learn AI, Cybersecurity, Linux, Networking, Web Development and more.
           </motion.p>

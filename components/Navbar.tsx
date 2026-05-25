@@ -58,7 +58,7 @@ export function Navbar() {
               <span className="text-lg font-bold text-foreground md:text-xl dark:text-white">
                 Structro
               </span>
-              <span className="text-lg font-bold text-accent md:text-xl">Tech</span>
+              <span className="text-lg font-bold text-primary md:text-xl">Tech</span>
             </Link>
 
             <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
@@ -69,10 +69,10 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     className={cn(
-                      "relative whitespace-nowrap py-1 text-sm font-medium transition-colors",
+                      "relative whitespace-nowrap py-1 text-[15px] font-normal tracking-normal transition-colors",
                       isActive
-                        ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-primary"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "font-medium text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-primary"
+                        : "text-foreground/85 hover:text-foreground dark:text-white/90 dark:hover:text-white"
                     )}
                   >
                     {link.label}
@@ -85,9 +85,9 @@ export function Navbar() {
               <ThemeToggle />
               <Link
                 href="/auth"
-                className="hidden md:inline-flex items-center rounded-full border border-accent px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="hidden md:inline-flex items-center rounded-full border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
               >
-                Sign Up
+                Get Started
               </Link>
               <button
                 type="button"
@@ -151,7 +151,7 @@ export function Navbar() {
                       href={link.href}
                       onClick={closeMenu}
                       className={cn(
-                        "py-3 text-lg font-medium transition-colors",
+                        "py-3 text-[15px] font-normal transition-colors",
                         isActive
                           ? "text-primary"
                           : "text-foreground hover:text-primary"
@@ -166,9 +166,9 @@ export function Navbar() {
               <Link
                 href="/auth"
                 onClick={closeMenu}
-                className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-accent py-3 text-base font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
+                className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-primary py-3 text-[15px] font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
               >
-                Sign Up
+                Get Started
               </Link>
             </motion.div>
           </>

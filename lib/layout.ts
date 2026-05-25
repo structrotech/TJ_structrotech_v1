@@ -13,10 +13,10 @@ export const pageShell = "min-h-screen pt-14 md:pt-20 pb-12 w-full";
 export const pageHeaderBlock = "w-full text-center mb-10 md:mb-12";
 
 export const pageTitle =
-  "text-[clamp(28px,4vw,42px)] font-extrabold text-foreground mb-3";
+  "font-serif text-[clamp(28px,4vw,42px)] font-bold leading-[1.1] text-foreground mb-3";
 
 export const pageSubtitle =
-  "text-base md:text-lg text-muted-foreground max-w-2xl mx-auto";
+  "text-[17px] md:text-[18px] font-normal text-muted-foreground max-w-[500px] mx-auto leading-relaxed";
 
 export const pageSearchRow = "flex justify-center w-full mb-8 md:mb-10";
 
