@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
-import { pageContainer } from "@/lib/layout";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -20,78 +20,162 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  const closeMenu = () => setIsOpen(false);
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 w-full bg-[rgba(5,8,22,0.6)] dark:bg-[rgba(5,8,22,0.6)] bg-white/80 backdrop-blur-xl border-b border-border">
-      <div className={cn(pageContainer, "flex items-center justify-between h-16 gap-4")}>
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-0 shrink-0">
-          <span className="text-xl font-bold text-foreground dark:text-white">Structro</span>
-          <span className="text-xl font-bold text-accent">Tech</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-center gap-4 lg:gap-6 xl:gap-8 flex-nowrap flex-1 px-2">
-          {navLinks.map((link) => (
+    <>
+      <header className="fixed top-3 left-4 right-4 z-50">
+        <nav
+          className={cn(
+            "rounded-full border backdrop-blur-xl shadow-lg overflow-hidden",
+            "bg-[#f5f0eb]/95 border-black/10",
+            "dark:bg-[#0f1117]/80 dark:border-white/10"
+          )}
+          aria-label="Main navigation"
+        >
+          <div className="flex h-14 md:h-[4.25rem] items-center justify-between gap-3 px-5 md:px-8">
+            {/* Logo */}
             <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-sm font-medium whitespace-nowrap shrink-0 transition-colors relative py-1",
-                pathname === link.href
-                  ? "text-foreground after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
+              href="/"
+              className="flex shrink-0 items-center gap-0"
+              onClick={closeMenu}
             >
-              {link.label}
+              <span className="text-lg font-bold text-foreground md:text-xl dark:text-white">
+                Structro
+              </span>
+              <span className="text-lg font-bold text-accent md:text-xl">Tech</span>
             </Link>
-          ))}
-        </div>
 
-        {/* Actions */}
-        <div className="flex items-center justify-end gap-4 shrink-0">
-          <ThemeToggle />
-          <Link
-            href="/auth"
-            className="hidden md:inline-flex px-4 py-2 text-sm font-medium rounded-full border border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors"
-          >
-            Sign Up
-          </Link>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
+            {/* Desktop links — center */}
+            <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "relative whitespace-nowrap py-1 text-sm font-medium transition-colors",
+                      isActive
+                        ? "text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:rounded-full after:bg-primary"
+                        : "text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
 
-      {isOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-background z-40">
-          <div className="flex flex-col items-center justify-center h-full gap-8">
-            {navLinks.map((link) => (
+            {/* Right — toggle + sign up + hamburger */}
+            <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
+              <ThemeToggle />
               <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  "text-2xl font-medium transition-colors",
-                  pathname === link.href ? "text-primary" : "text-muted-foreground hover:text-foreground"
-                )}
+                href="/auth"
+                className="hidden md:inline-flex items-center rounded-full border border-accent px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
               >
-                {link.label}
+                Sign Up
               </Link>
-            ))}
-            <Link
-              href="/auth"
-              onClick={() => setIsOpen(false)}
-              className="mt-4 px-6 py-3 text-lg font-medium rounded-full border border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              Sign Up
-            </Link>
+              <button
+                type="button"
+                onClick={() => setIsOpen(true)}
+                className="rounded-lg p-2 text-foreground transition-colors hover:bg-white/10 md:hidden dark:hover:bg-white/10"
+                aria-label="Open menu"
+                aria-expanded={isOpen}
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+            </div>
           </div>
-        </div>
-      )}
-    </nav>
+        </nav>
+      </header>
+
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.button
+              type="button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[99] bg-black/60 md:hidden"
+              aria-label="Close menu"
+              onClick={closeMenu}
+            />
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className={cn(
+                "fixed inset-0 z-[100] flex h-full w-full flex-col overflow-hidden md:hidden",
+                "bg-[#f5f0eb] dark:bg-[#0f1117]"
+              )}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
+            >
+              <button
+                type="button"
+                onClick={closeMenu}
+                className="absolute top-6 right-6 rounded-lg p-2 text-foreground transition-colors hover:bg-black/10 dark:hover:bg-white/10"
+                aria-label="Close menu"
+              >
+                <X className="h-7 w-7" />
+              </button>
+
+              <div className="flex flex-1 flex-col items-center justify-center px-6">
+                <nav className="flex w-full max-w-sm flex-col">
+                  {navLinks.map((link) => {
+                    const isActive = pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={closeMenu}
+                        className={cn(
+                          "w-full py-4 text-center text-xl font-medium transition-colors",
+                          isActive
+                            ? "text-primary"
+                            : "text-foreground hover:text-primary"
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+                </nav>
+
+                <Link
+                  href="/auth"
+                  onClick={closeMenu}
+                  className="mt-6 inline-flex items-center rounded-full border border-accent px-8 py-3 text-lg font-medium text-accent transition-colors hover:bg-accent hover:text-accent-foreground"
+                >
+                  Sign Up
+                </Link>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
