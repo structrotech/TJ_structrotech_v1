@@ -120,9 +120,9 @@ export default function HomePage() {
           <motion.div {...fadeUpInViewProps(0)} className="mt-10 w-full text-center">
             <Link
               href="/categories"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary font-medium rounded-full hover:bg-primary hover:text-primary-foreground transition-colors min-h-[44px]"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
-              Explore All Categories
+              Explore More
               <span aria-hidden="true">&rarr;</span>
             </Link>
           </motion.div>

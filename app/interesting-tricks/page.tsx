@@ -8,6 +8,7 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import { sortInterestingTricks, trickCategories } from "@/lib/interesting-tricks";
 import { filterTricksByCategory, searchInterestingTricks } from "@/lib/search-tricks";
+import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -20,7 +21,8 @@ import {
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "A-Z"];
-const INITIAL_VISIBLE = 12;
+const INITIAL_VISIBLE = 8;
+const MOBILE_CARD_LIMIT = 5;
 
 export default function InterestingTricksPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -86,13 +88,18 @@ export default function InterestingTricksPage() {
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {visibleTricks.map((trick, index) => (
-              <InterestingTrickCard
+              <div
                 key={trick.id}
-                question={trick.question}
-                blogSlug={trick.blogSlug}
-                category={trick.category}
-                animationDelay={listStaggerDelay(index)}
-              />
+                className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
+              >
+                <InterestingTrickCard
+                  index={index + 1}
+                  question={trick.question}
+                  blogSlug={trick.blogSlug}
+                  category={trick.category}
+                  animationDelay={listStaggerDelay(index)}
+                />
+              </div>
             ))}
           </div>
         ) : (
@@ -108,7 +115,7 @@ export default function InterestingTricksPage() {
               onClick={() => setVisibleCount((prev) => prev + 6)}
               className="min-h-[44px] rounded-full border border-border bg-card px-6 py-3 font-medium text-foreground transition-colors hover:border-primary/50"
             >
-              Load More
+              Explore More
             </button>
           </motion.div>
         )}

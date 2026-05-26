@@ -8,6 +8,7 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import { posts, categories } from "@/lib/data";
 import { searchPosts, filterPostsByCategory, sortPosts } from "@/lib/search";
+import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -21,6 +22,7 @@ import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/mot
 
 const categoryTabs = ["All", ...categories.slice(0, 5).map((c) => c.title)];
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
+const MOBILE_CARD_LIMIT = 5;
 
 export default function BlogsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -86,18 +88,22 @@ export default function BlogsPage() {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {visiblePosts.map((post, index) => (
-              <BlogCard
+              <div
                 key={post.slug}
-                title={post.title}
-                slug={post.slug}
-                coverImage={post.coverImage}
-                author={post.author}
-                publishedAt={post.publishedAt}
-                readTime={post.readTime}
-                excerpt={post.excerpt}
-                category={post.category}
-                animationDelay={listStaggerDelay(index)}
-              />
+                className={cn(index >= MOBILE_CARD_LIMIT && "hidden md:block")}
+              >
+                <BlogCard
+                  title={post.title}
+                  slug={post.slug}
+                  coverImage={post.coverImage}
+                  author={post.author}
+                  publishedAt={post.publishedAt}
+                  readTime={post.readTime}
+                  excerpt={post.excerpt}
+                  category={post.category}
+                  animationDelay={listStaggerDelay(index)}
+                />
+              </div>
             ))}
           </div>
         ) : (
@@ -114,7 +120,7 @@ export default function BlogsPage() {
               onClick={() => setVisibleCount((prev) => prev + 6)}
               className="px-6 py-3 bg-card border border-border text-foreground font-medium rounded-full hover:border-primary/50 transition-colors min-h-[44px]"
             >
-              Load More
+              Explore More
             </button>
           </motion.div>
         )}

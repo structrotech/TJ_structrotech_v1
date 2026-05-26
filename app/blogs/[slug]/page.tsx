@@ -3,11 +3,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { posts } from "@/lib/data";
+import { getHomeInterestingTricks } from "@/lib/interesting-tricks";
 import { AdBanner } from "@/components/AdBanner";
 import { AffiliateBox } from "@/components/AffiliateBox";
 import { SponsorBanner } from "@/components/SponsorBanner";
-import { DownloadSection } from "@/components/DownloadSection";
-import { BlogCard } from "@/components/BlogCard";
+import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { pageContainer } from "@/lib/layout";
 
 interface PageProps {
@@ -28,15 +28,16 @@ export default async function SingleBlogPage({ params }: PageProps) {
     notFound();
   }
 
-  const relatedPosts = posts
-    .filter((p) => p.categorySlug === post.categorySlug && p.slug !== post.slug)
-    .slice(0, 3);
-
   const formattedDate = new Date(post.publishedAt).toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
+
+  const interestingQuestions = getHomeInterestingTricks(6);
+  const downloadBlogUrl = post.pdfDownload ?? "/downloads/article.pdf";
+  const downloadSheetsUrl =
+    post.pdfDownload?.replace(/\.pdf$/i, "-sheets.pdf") ?? "/downloads/sheets.pdf";
 
   return (
     <div className="min-h-screen py-12 w-full">
@@ -113,12 +114,6 @@ export default async function SingleBlogPage({ params }: PageProps) {
         {/* Middle Ad */}
         <AdBanner position="middle" />
 
-        {/* Download Section */}
-        <DownloadSection
-          pdfUrl="/downloads/article.pdf"
-          title="Download This Article"
-        />
-
         {/* Sponsor Banner */}
         <SponsorBanner />
 
@@ -130,27 +125,65 @@ export default async function SingleBlogPage({ params }: PageProps) {
           <p className="text-muted-foreground">Comments coming soon</p>
         </div>
 
-        {/* Related Posts */}
-        {relatedPosts.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Related Articles</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {relatedPosts.map((relatedPost) => (
-                <BlogCard
-                  key={relatedPost.slug}
-                  title={relatedPost.title}
-                  slug={relatedPost.slug}
-                  coverImage={relatedPost.coverImage}
-                  author={relatedPost.author}
-                  publishedAt={relatedPost.publishedAt}
-                  readTime={relatedPost.readTime}
-                  excerpt={relatedPost.excerpt}
-                  category={relatedPost.category}
-                />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Interesting Questions */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Interesting Questions
+          </h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {interestingQuestions.map((trick, index) => (
+              <InterestingTrickCard
+                key={trick.id}
+                index={index + 1}
+                question={trick.question}
+                blogSlug={trick.blogSlug}
+                category={trick.category}
+                size="sm"
+              />
+            ))}
+          </div>
+        </section>
+
+        {/* Resources */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold text-foreground mb-6">Resources</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <a
+              href={downloadBlogUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-2xl border border-border bg-card/60 p-5 shadow-sm transition-all hover:border-primary/40 hover:shadow-md hover:ring-2 hover:ring-primary/15"
+            >
+              <p className="text-sm font-semibold text-foreground">Download Blog</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Get a PDF version of this article.
+              </p>
+              <p className="mt-4 text-sm font-medium text-primary">Download →</p>
+            </a>
+
+            <a
+              href={downloadSheetsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group rounded-2xl border border-border bg-card/60 p-5 shadow-sm transition-all hover:border-primary/40 hover:shadow-md hover:ring-2 hover:ring-primary/15"
+            >
+              <p className="text-sm font-semibold text-foreground">Download Sheets</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Cheatsheet / quick reference for this topic.
+              </p>
+              <p className="mt-4 text-sm font-medium text-primary">Download →</p>
+            </a>
+          </div>
+          <div className="mt-6 text-center">
+            <Link
+              href="/resources"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+            >
+              Explore all resources
+              <span aria-hidden="true">&rarr;</span>
+            </Link>
+          </div>
+        </section>
 
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-muted-foreground mt-12 pt-8 border-t border-border">

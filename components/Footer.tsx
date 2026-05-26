@@ -15,14 +15,12 @@ import { footerContainer } from "@/lib/layout";
 import { inputCardClass } from "@/components/SearchField";
 
 const learningLinks = [
-  { href: "/categories/ai", label: "AI" },
-  { href: "/categories/cybersecurity", label: "Cybersecurity" },
-  { href: "/categories/linux", label: "Linux" },
-  { href: "/categories/networking", label: "Networking" },
-  { href: "/categories/web-development", label: "Web Development" },
-  { href: "/categories/cloud", label: "Cloud" },
-  { href: "/categories/devops", label: "DevOps" },
-  { href: "/categories/tools", label: "Tools" },
+  { href: "/", label: "Home" },
+  { href: "/categories", label: "Categories" },
+  { href: "/blogs", label: "Blogs" },
+  { href: "/interesting-tricks", label: "Intresting Tricks" },
+  { href: "/resources", label: "Resources" },
+  { href: "/about", label: "About Us" },
 ];
 
 const productLinks = [

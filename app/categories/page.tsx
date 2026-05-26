@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
 import { categories } from "@/lib/data";
+import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -16,6 +17,7 @@ import {
 import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
+const MOBILE_CARD_LIMIT = 5;
 
 export default function CategoriesPage() {
   const [activeTab, setActiveTab] = useState("All");
@@ -46,16 +48,20 @@ export default function CategoriesPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
           {filteredCategories.map((category, index) => (
-            <CategoryCard
+            <div
               key={category.slug}
-              title={category.title}
-              slug={category.slug}
-              image={category.image}
-              badge={category.badge}
-              articleCount={category.articleCount}
-              description={category.description}
-              animationDelay={listStaggerDelay(index)}
-            />
+              className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
+            >
+              <CategoryCard
+                title={category.title}
+                slug={category.slug}
+                image={category.image}
+                badge={category.badge}
+                articleCount={category.articleCount}
+                description={category.description}
+                animationDelay={listStaggerDelay(index)}
+              />
+            </div>
           ))}
         </div>
       </div>

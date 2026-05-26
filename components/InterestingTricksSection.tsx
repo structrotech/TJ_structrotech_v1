@@ -6,6 +6,9 @@ import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { getHomeInterestingTricks } from "@/lib/interesting-tricks";
 import { pageContainer } from "@/lib/layout";
 import { fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+const MOBILE_CARD_LIMIT = 4;
 
 export function InterestingTricksSection() {
   const tricks = getHomeInterestingTricks(8);
@@ -25,13 +28,18 @@ export function InterestingTricksSection() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tricks.map((trick, index) => (
-            <InterestingTrickCard
+            <div
               key={trick.id}
-              question={trick.question}
-              blogSlug={trick.blogSlug}
-              category={trick.category}
-              animationDelay={listStaggerDelay(index)}
-            />
+              className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
+            >
+              <InterestingTrickCard
+                index={index + 1}
+                question={trick.question}
+                blogSlug={trick.blogSlug}
+                category={trick.category}
+                animationDelay={listStaggerDelay(index)}
+              />
+            </div>
           ))}
         </div>
 
@@ -40,7 +48,7 @@ export function InterestingTricksSection() {
             href="/interesting-tricks"
             className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
           >
-            Explore Interesting Tricks
+            Explore More
             <span aria-hidden="true">&rarr;</span>
           </Link>
         </motion.div>
