@@ -5,8 +5,10 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
+import { InterestingTricksSection } from "@/components/InterestingTricksSection";
 import { categories } from "@/lib/data";
 import { pageContainer } from "@/lib/layout";
+import { cn } from "@/lib/utils";
 import {
   fadeUpInViewProps,
   fadeUpMountProps,
@@ -96,18 +98,22 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-6 w-full">
+          <div className="mt-6 grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {filteredCategories.map((category, index) => (
-              <CategoryCard
+              <div
                 key={category.slug}
-                title={category.title}
-                slug={category.slug}
-                image={category.image}
-                badge={category.badge}
-                articleCount={category.articleCount}
-                description={category.description}
-                animationDelay={listStaggerDelay(index)}
-              />
+                className={cn(index >= 4 && "hidden sm:block")}
+              >
+                <CategoryCard
+                  title={category.title}
+                  slug={category.slug}
+                  image={category.image}
+                  badge={category.badge}
+                  articleCount={category.articleCount}
+                  description={category.description}
+                  animationDelay={listStaggerDelay(index)}
+                />
+              </div>
             ))}
           </div>
 
@@ -122,6 +128,8 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
+
+      <InterestingTricksSection />
     </div>
   );
 }

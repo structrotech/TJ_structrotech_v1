@@ -1,0 +1,142 @@
+[
+  {
+    "id": "copy-pc-mobile",
+    "question": "How to copy text from PC to mobile?",
+    "blogSlug": "copy-text-pc-to-mobile",
+    "category": "Productivity",
+    "featuredOnHome": true,
+    "homeOrder": 1,
+    "publishedAt": "2026-02-10",
+    "popular": true
+  },
+  {
+    "id": "wifi-password-windows",
+    "question": "How to find your Wi-Fi password on Windows?",
+    "blogSlug": "find-wifi-password-windows",
+    "category": "Networking",
+    "featuredOnHome": true,
+    "homeOrder": 2,
+    "publishedAt": "2026-02-08",
+    "popular": true
+  },
+  {
+    "id": "speed-up-laptop",
+    "question": "How to speed up a slow laptop in 10 minutes?",
+    "blogSlug": "speed-up-slow-laptop",
+    "category": "PC",
+    "featuredOnHome": true,
+    "homeOrder": 3,
+    "publishedAt": "2026-02-05",
+    "popular": false
+  },
+  {
+    "id": "block-ads-android",
+    "question": "How to block ads on Android without root?",
+    "blogSlug": "block-ads-android-no-root",
+    "category": "Mobile",
+    "featuredOnHome": true,
+    "homeOrder": 4,
+    "publishedAt": "2026-02-03",
+    "popular": true
+  },
+  {
+    "id": "usb-tethering",
+    "question": "How to share mobile internet to PC via USB?",
+    "blogSlug": "usb-tethering-mobile-to-pc",
+    "category": "Mobile",
+    "featuredOnHome": true,
+    "homeOrder": 5,
+    "publishedAt": "2026-01-28",
+    "popular": false
+  },
+  {
+    "id": "recover-deleted-files",
+    "question": "How to recover deleted files from Recycle Bin?",
+    "blogSlug": "recover-deleted-files-windows",
+    "category": "PC",
+    "featuredOnHome": true,
+    "homeOrder": 6,
+    "publishedAt": "2026-01-25",
+    "popular": false
+  },
+  {
+    "id": "scrolling-screenshot",
+    "question": "How to take scrolling screenshots on your phone?",
+    "blogSlug": "scrolling-screenshot-phone",
+    "category": "Mobile",
+    "featuredOnHome": true,
+    "homeOrder": 7,
+    "publishedAt": "2026-01-20",
+    "popular": true
+  },
+  {
+    "id": "phone-as-webcam",
+    "question": "How to use your phone as a webcam for PC?",
+    "blogSlug": "phone-as-webcam-for-pc",
+    "category": "Productivity",
+    "featuredOnHome": true,
+    "homeOrder": 8,
+    "publishedAt": "2026-01-18",
+    "popular": false
+  },
+  {
+    "id": "dark-mode-everywhere",
+    "question": "How to force dark mode on any website?",
+    "blogSlug": "force-dark-mode-any-website",
+    "category": "Productivity",
+    "featuredOnHome": false,
+    "homeOrder": 9,
+    "publishedAt": "2026-01-15",
+    "popular": false
+  },
+  {
+    "id": "zip-large-files",
+    "question": "How to send large files without email limits?",
+    "blogSlug": "send-large-files-without-email",
+    "category": "Productivity",
+    "featuredOnHome": false,
+    "homeOrder": 10,
+    "publishedAt": "2026-01-12",
+    "popular": true
+  },
+  {
+    "id": "secure-public-wifi",
+    "question": "How to stay safe on public Wi-Fi?",
+    "blogSlug": "stay-safe-public-wifi",
+    "category": "Security",
+    "featuredOnHome": false,
+    "homeOrder": 11,
+    "publishedAt": "2026-01-10",
+    "popular": true
+  },
+  {
+    "id": "battery-health",
+    "question": "How to check and improve phone battery health?",
+    "blogSlug": "improve-phone-battery-health",
+    "category": "Mobile",
+    "featuredOnHome": false,
+    "homeOrder": 12,
+    "publishedAt": "2026-01-08",
+    "popular": false
+  },
+  {
+    "id": "dual-monitor-laptop",
+    "question": "How to use a laptop as a second monitor?",
+    "blogSlug": "laptop-as-second-monitor",
+    "category": "PC",
+    "featuredOnHome": false,
+    "homeOrder": 13,
+    "publishedAt": "2026-01-05",
+    "popular": false
+  },
+  {
+    "id": "clipboard-history",
+    "question": "How to enable clipboard history on Windows?",
+    "blogSlug": "enable-clipboard-history-windows",
+    "category": "PC",
+    "featuredOnHome": false,
+    "homeOrder": 14,
+    "publishedAt": "2026-01-03",
+    "popular": false
+  }
+]
