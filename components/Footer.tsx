@@ -33,11 +33,11 @@ const productLinks = [
 ];
 
 const socialLinks = [
-  { href: "https://youtube.com", icon: Youtube, label: "YouTube" },
-  { href: "https://linkedin.com", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://twitter.com", icon: Twitter, label: "Twitter" },
-  { href: "https://instagram.com", icon: Instagram, label: "Instagram" },
-  { href: "https://github.com", icon: Github, label: "GitHub" },
+  { href: "https://www.youtube.com/@Structrotech", icon: Youtube, label: "YouTube" },
+  { href: "https://www.linkedin.com/company/strutrotech/?viewAsMember=true", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://x.com/structrotech", icon: Twitter, label: "Twitter" },
+  { href: "https://www.instagram.com/structrotech/", icon: Instagram, label: "Instagram" },
+  { href: "https://github.com/structrotech", icon: Github, label: "GitHub" },
 ];
 
 export function Footer() {
@@ -126,13 +126,13 @@ export function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="flex w-full flex-col items-start text-left">
+          <div className="flex w-full flex-col items-center text-center">
             <h3 className="mb-3 w-full text-sm font-bold text-foreground">Newsletter</h3>
             <p className="mb-4 w-full max-w-[280px] text-sm font-normal text-muted-foreground">
               Get the latest articles, resources and updates.
             </p>
             <form
-              className="w-full max-w-[280px] self-start"
+              className="mx-auto w-full max-w-[280px]"
               onSubmit={(e) => e.preventDefault()}
               aria-label="Newsletter signup"
             >

@@ -34,7 +34,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
     year: "numeric",
   });
 
-  const interestingQuestions = getHomeInterestingTricks(6);
+  const interestingQuestions = getHomeInterestingTricks(5);
   const downloadBlogUrl = post.pdfDownload ?? "/downloads/article.pdf";
   const downloadSheetsUrl =
     post.pdfDownload?.replace(/\.pdf$/i, "-sheets.pdf") ?? "/downloads/sheets.pdf";
