@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { client, resolveSanityImageUrl } from "@/sanity/client";
-import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
+import { TRICK_QUERY, TRICK_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
-import { resolveBlogRelations } from "@/lib/related-content";
+import { resolveTrickRelations } from "@/lib/related-content";
 import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
@@ -16,22 +16,22 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const posts = await client.fetch<{ slug?: string }[]>(POST_SLUGS_QUERY);
-  return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug! }));
+  const tricks = await client.fetch<{ slug?: string }[]>(TRICK_SLUGS_QUERY);
+  return tricks.filter((t) => t.slug).map((t) => ({ slug: t.slug! }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  let post: any = null;
+  let trick: any = null;
   try {
-    post = await client.fetch(POST_QUERY, { slug });
+    trick = await client.fetch(TRICK_QUERY, { slug });
   } catch (err) {
-    console.error("Sanity metadata fetch error on blog detail:", err);
+    console.error("Sanity metadata fetch error on trick detail:", err);
   }
-  if (!post) return {};
+  if (!trick) return {};
 
-  const title = post.seoTitle || post.title;
-  const description = post.seoDescription || post.excerpt || undefined;
+  const title = trick.seoTitle || trick.question;
+  const description = trick.seoDescription || trick.excerpt || undefined;
 
   return {
     title,
@@ -39,44 +39,43 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     openGraph: {
       title,
       description,
-      images: post.coverImage ? [resolveSanityImageUrl(post.coverImage)] : undefined,
+      images: trick.coverImage ? [resolveSanityImageUrl(trick.coverImage)] : undefined,
     },
   };
 }
 
-export default async function SingleBlogPage({ params }: PageProps) {
+export default async function SingleTrickPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let post: any = null;
+  let trick: any = null;
   try {
-    post = await client.fetch(POST_QUERY, { slug });
+    trick = await client.fetch(TRICK_QUERY, { slug });
   } catch (err) {
-    console.error("Sanity fetch error on blog detail:", err);
+    console.error("Sanity fetch error on trick detail:", err);
   }
 
-  if (!post) {
+  if (!trick) {
     notFound();
   }
 
-  const author = mapSanityAuthor(post.author ?? null);
-  const coverImage = resolveSanityImageUrl(post.coverImage);
-  const categoryTitle = post.category?.title ?? "";
-  const categorySlug = post.category?.slug?.current ?? "";
+  const author = mapSanityAuthor(trick.author ?? null);
+  const coverImage = resolveSanityImageUrl(trick.coverImage);
+  const category = trick.category ?? "";
 
-  const formattedDate = post.publishedAt
-    ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+  const formattedDate = trick.publishedAt
+    ? new Date(trick.publishedAt).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
       })
     : "";
 
-  const { tricks, blogs: relatedBlogs } = await resolveBlogRelations(post, slug);
+  const { tricks, blogs: relatedBlogs } = await resolveTrickRelations(trick, slug);
 
-  const hasResources = Array.isArray(post.resources) && post.resources.length > 0;
+  const hasResources = Array.isArray(trick.resources) && trick.resources.length > 0;
   const resources: any[] = hasResources
-    ? post.resources
-    : [{ title: "Download this blog as PDF" }, { title: "Related download" }];
+    ? trick.resources
+    : [{ title: "Download this trick as PDF" }, { title: "Related download" }];
 
   const resourcesContent =
     resources.length > 0 ? (
@@ -96,14 +95,14 @@ export default async function SingleBlogPage({ params }: PageProps) {
   const tricksContent =
     tricks.length > 0 ? (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {tricks.map((trick: any, index: number) => (
+        {tricks.map((t: any, index: number) => (
           <InterestingTrickCard
-            key={trick.id}
+            key={t.id}
             index={index + 1}
-            question={trick.question}
-            slug={trick.slug}
-            blogSlug={trick.blogSlug}
-            category={trick.category}
+            question={t.question}
+            slug={t.slug}
+            blogSlug={t.blogSlug}
+            category={t.category}
             size="sm"
           />
         ))}
@@ -132,23 +131,19 @@ export default async function SingleBlogPage({ params }: PageProps) {
   return (
     <ArticleDetail
       coverImage={coverImage}
-      title={post.title}
-      category={
-        categoryTitle
-          ? { label: categoryTitle, href: categorySlug ? `/categories/${categorySlug}` : undefined }
-          : null
-      }
+      title={trick.question}
+      category={category ? { label: category } : null}
       author={author}
       formattedDate={formattedDate}
-      readTime={post.readTime ?? 5}
-      excerpt={post.excerpt}
-      body={post.body}
+      readTime={trick.readTime ?? 5}
+      excerpt={trick.excerpt}
+      body={trick.body}
       breadcrumb={{
         items: [
           { label: "Home", href: "/" },
-          { label: "Blogs", href: "/blogs" },
+          { label: "Interesting Tricks", href: "/interesting-tricks" },
         ],
-        current: post.title,
+        current: trick.question,
       }}
       resourcesContent={resourcesContent}
       tricksContent={tricksContent}

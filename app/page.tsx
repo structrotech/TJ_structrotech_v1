@@ -1,14 +1,29 @@
 import { InterestingTricksSection } from "@/components/InterestingTricksSection";
 import { pageContainer } from "@/lib/layout";
-import { client } from '@/sanity/client'
-import { CATEGORIES_QUERY } from '@/sanity/queries'
-import { HeroSection } from '@/components/HeroSection'
-import { CategoriesSection } from '@/components/CategoriesSection'
+import { client } from "@/sanity/client";
+import { CATEGORIES_QUERY, FEATURED_TRICKS_QUERY } from "@/sanity/queries";
+import { mapSanityTrick } from "@/lib/sanity-mappers";
+import { HeroSection } from "@/components/HeroSection";
+import { CategoriesSection } from "@/components/CategoriesSection";
+
+export const revalidate = 60;
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 
 export default async function Home() {
-  const categories = await client.fetch(CATEGORIES_QUERY);
+  let categories: unknown[] = [];
+  let featuredTricks = [];
+
+  try {
+    const [fetchedCategories, fetchedTricks] = await Promise.all([
+      client.fetch(CATEGORIES_QUERY),
+      client.fetch(FEATURED_TRICKS_QUERY),
+    ]);
+    categories = fetchedCategories;
+    featuredTricks = fetchedTricks.map(mapSanityTrick);
+  } catch (err) {
+    console.error("Sanity fetch error on homepage:", err);
+  }
 
   return (
     <div className="min-h-screen w-full">
@@ -23,7 +38,7 @@ export default async function Home() {
 
       <CategoriesSection categories={categories} categoryTabs={categoryTabs} />
 
-      <InterestingTricksSection />
+      <InterestingTricksSection tricks={featuredTricks} />
     </div>
   );
 }

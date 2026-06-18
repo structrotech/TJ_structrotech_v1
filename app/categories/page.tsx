@@ -1,70 +1,18 @@
-"use client";
+import { client } from "@/sanity/client";
+import { CATEGORIES_QUERY } from "@/sanity/queries";
+import { mapSanityCategory } from "@/lib/sanity-mappers";
+import CategoriesPageClient from "./CategoriesPageClient";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { CategoryCard } from "@/components/CategoryCard";
-import { FilterTabs } from "@/components/FilterTabs";
-import { categories } from "@/lib/data";
-import { cn } from "@/lib/utils";
-import {
-  pageContainer,
-  pageShell,
-  pageHeaderBlock,
-  pageTitle,
-  pageSubtitle,
-  pageControlsRow,
-} from "@/lib/layout";
-import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
+export const revalidate = 60;
 
-const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
-const MOBILE_CARD_LIMIT = 5;
+export default async function CategoriesPage() {
+  let categories = [];
+  try {
+    const fetched = await client.fetch(CATEGORIES_QUERY);
+    categories = fetched.map(mapSanityCategory);
+  } catch (err) {
+    console.error("Sanity fetch error on categories page:", err);
+  }
 
-export default function CategoriesPage() {
-  const [activeTab, setActiveTab] = useState("All");
-
-  const filteredCategories = categories.filter((cat) => {
-    if (activeTab === "All") return true;
-    return cat.tag === activeTab || cat.badge === activeTab;
-  });
-
-  return (
-    <div className={pageShell}>
-      <div className={pageContainer}>
-        <motion.div {...fadeUpMountProps(0)} className={pageHeaderBlock}>
-          <h1 className={pageTitle}>All Categories</h1>
-          <p className={pageSubtitle}>
-            Explore our comprehensive collection of learning resources
-          </p>
-        </motion.div>
-
-        <motion.div {...fadeUpMountProps(0.1)} className={pageControlsRow}>
-          <FilterTabs
-            tabs={categoryTabs}
-            active={activeTab}
-            onChange={setActiveTab}
-            align="center"
-          />
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
-          {filteredCategories.map((category, index) => (
-            <div
-              key={category.slug}
-              className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
-            >
-              <CategoryCard
-                title={category.title}
-                slug={category.slug}
-                image={category.image}
-                badge={category.badge}
-                articleCount={category.articleCount}
-                description={category.description}
-                animationDelay={listStaggerDelay(index)}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <CategoriesPageClient categories={categories} />;
 }

@@ -24,7 +24,7 @@ export function CategoriesSection({ categories, categoryTabs }: CategoriesSectio
           </div>
         </motion.div>
 
-        <CategoriesList categories={categories} categoryTabs={categoryTabs} />
+        <CategoriesList categories={categories} categoryTabs={categoryTabs} maxItems={8} />
 
         <motion.div {...fadeUpInViewProps(0)} className="mt-10 w-full text-center">
           <Link

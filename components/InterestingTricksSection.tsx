@@ -3,15 +3,19 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
-import { getHomeInterestingTricks } from "@/lib/interesting-tricks";
+import type { TrickListItem } from "@/lib/sanity-mappers";
 import { pageContainer } from "@/lib/layout";
 import { fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const MOBILE_CARD_LIMIT = 4;
 
-export function InterestingTricksSection() {
-  const tricks = getHomeInterestingTricks(8);
+export function InterestingTricksSection({ tricks = [] }: { tricks?: TrickListItem[] }) {
+  const visibleTricks = tricks.slice(0, 8);
+
+  if (visibleTricks.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full border-t border-border/60 py-16">
@@ -27,7 +31,7 @@ export function InterestingTricksSection() {
         </motion.div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {tricks.map((trick, index) => (
+          {visibleTricks.map((trick, index) => (
             <div
               key={trick.id}
               className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
@@ -35,6 +39,7 @@ export function InterestingTricksSection() {
               <InterestingTrickCard
                 index={index + 1}
                 question={trick.question}
+                slug={trick.slug}
                 blogSlug={trick.blogSlug}
                 category={trick.category}
                 animationDelay={listStaggerDelay(index)}

@@ -5,7 +5,7 @@ import { schemaTypes } from './sanity/schema'
 export default defineConfig({
   name: 'structrotech',
   title: 'StructroTech',
-  projectId: 'q4xdedds',
+  projectId: 'wvz6gdxf',
   dataset: 'production',
   plugins: [deskTool()],
   schema: {

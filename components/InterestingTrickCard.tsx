@@ -17,7 +17,8 @@ const sizeClass: Record<NonNullable<InterestingTrickCardProps["size"]>, string> 
 
 interface InterestingTrickCardProps {
   question: string;
-  blogSlug: string;
+  slug?: string;
+  blogSlug?: string;
   category: string;
   index: number;
   size?: "default" | "sm";
@@ -27,6 +28,7 @@ interface InterestingTrickCardProps {
 
 export function InterestingTrickCard({
   question,
+  slug,
   blogSlug,
   category,
   index,
@@ -34,10 +36,11 @@ export function InterestingTrickCard({
   animationDelay = 0,
   className,
 }: InterestingTrickCardProps) {
+  const href = slug ? `/interesting-tricks/${slug}` : `/blogs/${blogSlug ?? ""}`;
   return (
     <motion.div {...fadeUpInViewProps(animationDelay)} className={cn("h-full", className)}>
       <Link
-        href={`/blogs/${blogSlug}`}
+        href={href}
         className={cn(baseCardClass, sizeClass[size])}
       >
         <div className={cn("flex items-start justify-between gap-3", size === "sm" ? "mb-3" : "mb-4")}>
