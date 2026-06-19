@@ -2,11 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
-import ScrollToTop from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { Navbar } from "@/components/Navbar";
-import { Footer } from "@/components/Footer";
-import { AmbientBackground } from "@/components/AmbientBackground";
+import { HydrationReady } from "@/components/HydrationReady";
+
+// Failsafe: if the app hasn't hydrated within a few seconds (JS blocked or
+// failed to load), reveal the framer-motion content so the page isn't empty.
+const FORCE_REVEAL_SCRIPT = `window.__fmRevealTimer=window.setTimeout(function(){document.documentElement.classList.add('fm-force-reveal')},3500);`;
 
 const inter = Inter({
   subsets: ["latin"],
@@ -61,16 +62,10 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col w-full m-0 p-0`}
       >
+        <script dangerouslySetInnerHTML={{ __html: FORCE_REVEAL_SCRIPT }} />
         <ThemeProvider>
-          <ScrollToTop />
-          <AmbientBackground />
-          <div className="flex min-h-screen w-full max-w-[1400px] flex-col mx-auto">
-            <Navbar />
-            <main className="flex-1 w-full pt-[5.5rem] md:pt-24">
-              <div className="min-h-screen w-full overflow-x-hidden">{children}</div>
-            </main>
-          </div>
-          <Footer />
+          <HydrationReady />
+          {children}
         </ThemeProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>

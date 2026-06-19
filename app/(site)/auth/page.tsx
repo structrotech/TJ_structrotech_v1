@@ -9,6 +9,13 @@ import { fadeUpMountProps } from "@/lib/motion";
 export default function AuthPage() {
   const [isSignUp, setIsSignUp] = useState(true);
 
+  function toggleMode() {
+    setIsSignUp((prev) => !prev);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }
+
   return (
     <div className="min-h-screen py-12 w-full flex items-center justify-center">
       <div className={`${pageContainer} flex justify-center`}>
@@ -18,7 +25,7 @@ export default function AuthPage() {
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-0 mb-4">
               <span className="text-2xl font-bold text-foreground">Structro</span>
-              <span className="text-2xl font-bold text-accent">Tech</span>
+              <span className="text-2xl font-bold text-primary">Tech</span>
             </Link>
             <h1 className="text-2xl font-bold text-foreground">
               {isSignUp ? "Create an Account" : "Welcome Back"}
@@ -132,7 +139,7 @@ export default function AuthPage() {
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
             <button
               type="button"
-              onClick={() => setIsSignUp(!isSignUp)}
+              onClick={toggleMode}
               className="text-primary hover:underline font-medium"
             >
               {isSignUp ? "Sign In" : "Sign Up"}

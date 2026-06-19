@@ -164,3 +164,21 @@ body {
     min-height: 100%;
   }
 }
+
+/*
+ * Animation safety net.
+ * Content animated by framer-motion starts at opacity:0 and is revealed by JS.
+ * If JavaScript is disabled, or fails to load/hydrate (e.g. flaky connection),
+ * force the animated elements visible so the page never looks empty.
+ */
+@media (scripting: none) {
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+html.fm-force-reveal [data-animate] {
+  opacity: 1 !important;
+  transform: none !important;
+}

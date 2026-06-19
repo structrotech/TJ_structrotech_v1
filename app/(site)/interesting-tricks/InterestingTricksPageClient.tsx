@@ -20,7 +20,7 @@ import {
 } from "@/lib/layout";
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
-const sortOptions = ["Latest", "Oldest", "Most Popular", "A-Z"];
+const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
 const INITIAL_VISIBLE = 8;
 const MOBILE_CARD_LIMIT = 5;
 

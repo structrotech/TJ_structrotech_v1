@@ -2,7 +2,19 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Target, Eye, Heart, Lightbulb, Users, Shield } from "lucide-react";
+import {
+  Target,
+  Eye,
+  Heart,
+  Lightbulb,
+  Users,
+  Shield,
+  Mail,
+  Instagram,
+  Twitter,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
 import {
   pageContainer,
   pageShell,
@@ -42,6 +54,47 @@ const values = [
     icon: Eye,
     title: "Practical Focus",
     description: "We emphasize hands-on learning with real-world examples and projects.",
+  },
+];
+
+type ContactChannel = {
+  icon: typeof Mail;
+  label: string;
+  value: string;
+  href?: string;
+  soon?: boolean;
+};
+
+const contactChannels: ContactChannel[] = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "contactstructrotech@gmail.com",
+    href: "mailto:contactstructrotech@gmail.com",
+  },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    value: "@structrotech",
+    href: "https://www.instagram.com/structrotech/",
+  },
+  {
+    icon: Twitter,
+    label: "X (Twitter)",
+    value: "Coming soon",
+    soon: true,
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "Coming soon",
+    soon: true,
+  },
+  {
+    icon: Youtube,
+    label: "YouTube",
+    value: "Coming soon",
+    soon: true,
   },
 ];
 
@@ -94,8 +147,70 @@ export default function AboutPage() {
           </div>
         </motion.section>
 
-        <motion.section {...fadeUpInViewProps(0)} className="text-center pb-4">
-          <div className="mx-auto max-w-xl p-8 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 border border-primary/20">
+        <motion.section
+          {...fadeUpInViewProps(0)}
+          id="contact"
+          className="mb-16 scroll-mt-32 md:scroll-mt-36"
+        >
+          <h2 className="text-2xl font-bold text-foreground mb-2 text-center">Contact Us</h2>
+          <p className="text-muted-foreground text-center mb-8 max-w-xl mx-auto">
+            Have a question, suggestion, or partnership idea? Reach out — we&apos;d love to hear
+            from you. More channels are on the way.
+          </p>
+          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
+            {contactChannels.map((channel, index) => {
+              const inner = (
+                <>
+                  <div className="p-2 rounded-xl bg-primary/10 shrink-0">
+                    <channel.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-foreground">{channel.label}</p>
+                    <p className="text-sm text-muted-foreground truncate">{channel.value}</p>
+                  </div>
+                  {channel.soon && (
+                    <span className="ml-auto shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+                      Later
+                    </span>
+                  )}
+                </>
+              );
+
+              const baseClass =
+                "flex items-center gap-3 p-4 rounded-2xl border border-border bg-card/50 backdrop-blur-sm";
+
+              if (channel.href) {
+                const external = channel.href.startsWith("http");
+                return (
+                  <motion.a
+                    key={channel.label}
+                    {...fadeUpInViewProps(listStaggerDelay(index))}
+                    href={channel.href}
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    className={`${baseClass} transition-colors hover:border-primary/50`}
+                  >
+                    {inner}
+                  </motion.a>
+                );
+              }
+
+              return (
+                <motion.div
+                  key={channel.label}
+                  {...fadeUpInViewProps(listStaggerDelay(index))}
+                  className={`${baseClass} opacity-70`}
+                >
+                  {inner}
+                </motion.div>
+              );
+            })}
+          </div>
+        </motion.section>
+
+        <motion.section {...fadeUpInViewProps(0)} className="pb-4">
+          <div className="mx-auto max-w-3xl p-8 rounded-2xl border border-border bg-card/50 backdrop-blur-sm text-center transition-colors hover:border-primary/50">
             <h2 className="text-2xl font-bold text-foreground mb-4">
               Ready to Start Learning?
             </h2>

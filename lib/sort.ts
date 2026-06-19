@@ -53,10 +53,9 @@ export function sortResources(resources: Resource[], sortBy: string): Resource[]
   }
 }
 
-export function sortTricks<T extends { publishedAt: string; question: string; popular?: boolean }>(
-  tricks: T[],
-  sortBy: string
-): T[] {
+export function sortTricks<
+  T extends { publishedAt: string; question: string; popular?: boolean; readTime?: number }
+>(tricks: T[], sortBy: string): T[] {
   const sorted = [...tricks];
 
   switch (sortBy) {
@@ -73,6 +72,8 @@ export function sortTricks<T extends { publishedAt: string; question: string; po
         }
         return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
       });
+    case "Beginner Friendly":
+      return sorted.sort((a, b) => (a.readTime ?? 0) - (b.readTime ?? 0));
     case "Latest":
     default:
       return sorted.sort(

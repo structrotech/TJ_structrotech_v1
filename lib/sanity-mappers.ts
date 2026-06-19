@@ -42,6 +42,7 @@ export type TrickListItem = {
   homeOrder: number;
   publishedAt: string;
   popular: boolean;
+  readTime: number;
 };
 
 export type ResourceListItem = Resource;
@@ -116,6 +117,7 @@ export function mapSanityTrick(raw: {
   homeOrder?: number;
   publishedAt?: string;
   popular?: boolean;
+  readTime?: number;
   linkedPost?: { slug?: { current?: string } };
 }): TrickListItem {
   return {
@@ -128,6 +130,7 @@ export function mapSanityTrick(raw: {
     homeOrder: raw.homeOrder ?? 0,
     publishedAt: raw.publishedAt ?? "",
     popular: raw.popular ?? false,
+    readTime: raw.readTime ?? 5,
   };
 }
 

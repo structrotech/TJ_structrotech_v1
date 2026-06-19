@@ -23,6 +23,8 @@ export function fadeUpInViewProps(delay = 0) {
     whileInView: fadeUpVisible,
     viewport: viewportOnce,
     transition: fadeUpTransition(delay),
+    // Hook for the CSS safety net so content stays visible if JS never runs/hydrates.
+    "data-animate": "",
   };
 }
 
@@ -31,6 +33,7 @@ export function fadeUpMountProps(delay = 0) {
     initial: fadeUpHidden,
     animate: fadeUpVisible,
     transition: fadeUpTransition(delay),
+    "data-animate": "",
   };
 }
 

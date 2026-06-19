@@ -7,6 +7,7 @@ export default defineConfig({
   title: 'StructroTech',
   projectId: 'wvz6gdxf',
   dataset: 'production',
+  basePath: '/studio',
   plugins: [deskTool()],
   schema: {
     types: schemaTypes,

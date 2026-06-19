@@ -21,6 +21,7 @@ const learningLinks = [
   { href: "/interesting-tricks", label: "Intresting Tricks" },
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About Us" },
+  { href: "/about#contact", label: "Contact us" },
 ];
 
 const productLinks = [

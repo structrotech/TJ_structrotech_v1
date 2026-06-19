@@ -142,6 +142,7 @@ export const TRICKS_QUERY = groq`
     homeOrder,
     popular,
     publishedAt,
+    readTime,
     linkedPost->{
       slug
     }
@@ -156,6 +157,7 @@ export const FEATURED_TRICKS_QUERY = groq`
     category,
     popular,
     publishedAt,
+    readTime,
     linkedPost->{
       slug
     }
