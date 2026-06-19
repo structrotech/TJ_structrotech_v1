@@ -1,7 +1,7 @@
 import { groq } from 'next-sanity'
 
 export const CATEGORIES_QUERY = groq`
-  *[_type == "category"] | order(_createdAt asc) {
+  *[_type == "category"] | order(coalesce(displayOrder, 999999) asc, _createdAt asc) {
     _id,
     title,
     slug,
@@ -13,7 +13,7 @@ export const CATEGORIES_QUERY = groq`
 `
 
 export const POSTS_QUERY = groq`
-  *[_type == "post"] | order(publishedAt desc) {
+  *[_type == "post"] | order(coalesce(displayOrder, 999999) asc, publishedAt desc) {
     _id,
     title,
     slug,
@@ -134,7 +134,7 @@ export const POSTS_BY_CATEGORY_QUERY = groq`
 `
 
 export const TRICKS_QUERY = groq`
-  *[_type == "interestingTrick"] | order(publishedAt desc) {
+  *[_type == "interestingTrick"] | order(coalesce(displayOrder, 999999) asc, publishedAt desc) {
     _id,
     question,
     slug,
@@ -151,7 +151,7 @@ export const TRICKS_QUERY = groq`
 `
 
 export const FEATURED_TRICKS_QUERY = groq`
-  *[_type == "interestingTrick" && featuredOnHome == true] | order(homeOrder asc) {
+  *[_type == "interestingTrick" && featuredOnHome == true] | order(coalesce(displayOrder, homeOrder, 999999) asc, publishedAt desc) {
     _id,
     question,
     slug,

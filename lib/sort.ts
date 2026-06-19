@@ -6,9 +6,9 @@ export function sortPosts(posts: BlogListPost[], sortBy: string): BlogListPost[]
 
   switch (sortBy) {
     case "Latest":
-      return sorted.sort(
-        (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
+      // Default view: preserve the server order, which already applies the
+      // manual `displayOrder` (then newest-first as fallback) from Sanity.
+      return sorted;
     case "Oldest":
       return sorted.sort(
         (a, b) => new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
@@ -76,8 +76,8 @@ export function sortTricks<
       return sorted.sort((a, b) => (a.readTime ?? 0) - (b.readTime ?? 0));
     case "Latest":
     default:
-      return sorted.sort(
-        (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
+      // Default view: preserve the server order, which already applies the
+      // manual `displayOrder` (then newest-first as fallback) from Sanity.
+      return sorted;
   }
 }

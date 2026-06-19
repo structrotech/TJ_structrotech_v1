@@ -62,6 +62,12 @@ export const postSchema = {
         type: 'boolean',
       },
       {
+        name: 'displayOrder',
+        title: 'Display Order',
+        description: 'Optional. Lower number appears first (1, 2, 3…). Leave empty to keep the default (newest first) order.',
+        type: 'number',
+      },
+      {
         name: 'seoTitle',
         title: 'SEO Title',
         type: 'string',

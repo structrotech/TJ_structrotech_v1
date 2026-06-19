@@ -37,6 +37,12 @@ export const categorySchema = {
         options: {
           list: ['Tech','AI','Cybersecurity','Cloud','DevOps','Web']
         }
+      },
+      {
+        name: 'displayOrder',
+        title: 'Display Order',
+        description: 'Optional. Lower number appears first (1, 2, 3…). Leave empty to keep the default order.',
+        type: 'number',
       }
     ]
   }

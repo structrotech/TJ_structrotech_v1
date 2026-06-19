@@ -68,7 +68,13 @@ export const trickSchema = {
     },
     {
       name: 'homeOrder',
-      title: 'Home Order',
+      title: 'Home Order (legacy)',
+      type: 'number',
+    },
+    {
+      name: 'displayOrder',
+      title: 'Display Order',
+      description: 'Optional. Lower number appears first (1, 2, 3…) on the Tricks page and homepage. Leave empty to keep the default (newest first) order.',
       type: 'number',
     },
     {
