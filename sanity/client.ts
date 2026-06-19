@@ -5,7 +5,12 @@ export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
   apiVersion: '2024-01-01',
-  useCdn: true,
+  // Read from the live API (not the cached CDN edge). The CDN can serve stale
+  // results for recently created/published documents, which made some published
+  // blogs/tricks 404 even though they exist. Next.js ISR (`revalidate`) still
+  // caches these fetches, so performance is unaffected.
+  useCdn: false,
+  perspective: 'published',
   token: undefined,
 })
 

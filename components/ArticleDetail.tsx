@@ -3,14 +3,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
 import { PortableTextRenderer } from "@/components/PortableTextRenderer";
-import { AdBanner } from "@/components/AdBanner";
-import { AffiliateBox } from "@/components/AffiliateBox";
-import { SponsorBanner } from "@/components/SponsorBanner";
+import { ArticleActions } from "@/components/ArticleActions";
+import { ReadingProgressBar } from "@/components/ReadingProgressBar";
+import { AdPlaceholderBlock } from "@/components/blocks/AdPlaceholderBlock";
 import { pageContainer } from "@/lib/layout";
 
 interface BreadcrumbItem {
   label: string;
   href: string;
+}
+
+interface Monetization {
+  adTop?: boolean;
+  adMiddle?: boolean;
+  adBottom?: boolean;
 }
 
 interface ArticleDetailProps {
@@ -26,6 +32,7 @@ interface ArticleDetailProps {
   resourcesContent?: ReactNode;
   tricksContent?: ReactNode;
   relatedBlogsContent?: ReactNode;
+  monetization?: Monetization | null;
 }
 
 /**
@@ -45,12 +52,17 @@ export function ArticleDetail({
   resourcesContent,
   tricksContent,
   relatedBlogsContent,
+  monetization,
 }: ArticleDetailProps) {
+  const ads = monetization ?? {};
   return (
     <div className="min-h-screen py-12 w-full">
+      <ReadingProgressBar />
       <div className={pageContainer}>
         <div className="max-w-4xl mx-auto w-full">
-          <AdBanner position="top" />
+          {ads.adTop ? (
+            <AdPlaceholderBlock value={{ enabled: true, position: "top" }} />
+          ) : null}
 
           <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden mb-8">
             <Image src={coverImage} alt={title} fill className="object-cover" priority />
@@ -100,19 +112,11 @@ export function ArticleDetail({
             <PortableTextRenderer value={body} />
           </article>
 
-          <AffiliateBox
-            title="Master This Topic with Our Course"
-            description="Get hands-on experience with our comprehensive video course covering all the concepts discussed in this article."
-            link="https://example.com/course"
-          />
+          {ads.adMiddle ? (
+            <AdPlaceholderBlock value={{ enabled: true, position: "middle" }} />
+          ) : null}
 
-          <AdBanner position="middle" />
-          <SponsorBanner />
-          <AdBanner position="bottom" />
-
-          <div className="my-12 p-8 rounded-2xl border border-border bg-card/50 text-center">
-            <p className="text-muted-foreground">Comments coming soon</p>
-          </div>
+          <ArticleActions title={title} />
 
           {resourcesContent ? (
             <section className="mt-12">
@@ -133,6 +137,12 @@ export function ArticleDetail({
               <h2 className="text-2xl font-bold text-foreground mb-6">Related Blogs</h2>
               {relatedBlogsContent}
             </section>
+          ) : null}
+
+          {ads.adBottom ? (
+            <div className="mt-12">
+              <AdPlaceholderBlock value={{ enabled: true, position: "bottom" }} />
+            </div>
           ) : null}
 
           <nav className="flex items-center gap-2 text-sm text-muted-foreground mt-12 pt-8 border-t border-border">

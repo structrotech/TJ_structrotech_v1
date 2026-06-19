@@ -4,6 +4,7 @@ import { client, resolveSanityImageUrl } from "@/sanity/client";
 import { TRICK_QUERY, TRICK_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
 import { resolveTrickRelations } from "@/lib/related-content";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
@@ -75,7 +76,7 @@ export default async function SingleTrickPage({ params }: PageProps) {
   const hasResources = Array.isArray(trick.resources) && trick.resources.length > 0;
   const resources: any[] = hasResources
     ? trick.resources
-    : [{ title: "Download this trick as PDF" }, { title: "Related download" }];
+    : [{ title: "Download this trick as PDF" }, { title: "Download post" }];
 
   const resourcesContent =
     resources.length > 0 ? (
@@ -128,7 +129,32 @@ export default async function SingleTrickPage({ params }: PageProps) {
       </div>
     ) : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: trick.question,
+    description: trick.seoDescription || trick.excerpt || undefined,
+    image: coverImage ? [coverImage] : undefined,
+    datePublished: trick.publishedAt || undefined,
+    dateModified: trick._updatedAt || trick.publishedAt || undefined,
+    author: { "@type": "Person", name: author.name },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.svg` },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/interesting-tricks/${slug}`,
+    },
+  };
+
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
     <ArticleDetail
       coverImage={coverImage}
       title={trick.question}
@@ -148,6 +174,8 @@ export default async function SingleTrickPage({ params }: PageProps) {
       resourcesContent={resourcesContent}
       tricksContent={tricksContent}
       relatedBlogsContent={relatedBlogsContent}
+      monetization={trick.monetization}
     />
+    </>
   );
 }

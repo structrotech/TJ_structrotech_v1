@@ -1,4 +1,5 @@
 import { pageBuilderBlockRefs } from './blocks'
+import { bodyImage } from './bodyImage'
 
 export const trickSchema = {
   name: 'interestingTrick',
@@ -31,7 +32,7 @@ export const trickSchema = {
       name: 'body',
       title: 'Trick Content',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'image' }, ...pageBuilderBlockRefs],
+      of: [{ type: 'block' }, bodyImage, ...pageBuilderBlockRefs],
     },
     {
       name: 'category',
@@ -84,6 +85,19 @@ export const trickSchema = {
       name: 'seoDescription',
       title: 'SEO Description',
       type: 'text',
+    },
+    {
+      name: 'monetization',
+      title: 'Ad Placeholders',
+      description:
+        'Optional Google Ad placeholders for this trick. Turn each position on or off. Clean placeholders only — no AdSense code yet.',
+      type: 'object',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        { name: 'adTop', title: 'Show Top Ad', type: 'boolean', initialValue: false },
+        { name: 'adMiddle', title: 'Show Middle Ad', type: 'boolean', initialValue: false },
+        { name: 'adBottom', title: 'Show Bottom Ad', type: 'boolean', initialValue: false },
+      ],
     },
     {
       name: 'resources',

@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { Share2, Check } from "lucide-react";
 import { fadeUpInViewProps } from "@/lib/motion";
+import { nativeShareOrCopy } from "@/lib/share";
 import type { Author } from "@/types/sanity";
 
 interface BlogCardProps {
@@ -30,11 +32,23 @@ export function BlogCard({
   category,
   animationDelay = 0,
 }: BlogCardProps) {
+  const [copied, setCopied] = useState(false);
+
   const formattedDate = new Date(publishedAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
+
+  async function handleShare(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    const result = await nativeShareOrCopy(`/blogs/${slug}`, title);
+    if (result === "copied") {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }
 
   return (
     <motion.div {...fadeUpInViewProps(animationDelay)}>
@@ -55,13 +69,18 @@ export function BlogCard({
                 {category}
               </span>
             </div>
-            {/* Like Button Placeholder */}
+            {/* Share Button */}
             <button
               className="absolute top-3 right-3 p-2 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors"
-              onClick={(e) => e.preventDefault()}
-              aria-label="Like this post"
+              onClick={handleShare}
+              aria-label={copied ? "Link copied" : "Share this post"}
+              title={copied ? "Link copied" : "Share"}
             >
-              <Heart className="w-4 h-4 text-white" />
+              {copied ? (
+                <Check className="w-4 h-4 text-white" />
+              ) : (
+                <Share2 className="w-4 h-4 text-white" />
+              )}
             </button>
           </div>
 

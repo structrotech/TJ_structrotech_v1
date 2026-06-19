@@ -48,6 +48,7 @@ export const POST_QUERY = groq`
     featured,
     seoTitle,
     seoDescription,
+    monetization,
     category-> {
       title,
       slug
@@ -189,6 +190,7 @@ export const TRICK_QUERY = groq`
     readTime,
     seoTitle,
     seoDescription,
+    monetization,
     author-> {
       name,
       slug,

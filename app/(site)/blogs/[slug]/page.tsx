@@ -4,6 +4,7 @@ import { client, resolveSanityImageUrl } from "@/sanity/client";
 import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
 import { resolveBlogRelations } from "@/lib/related-content";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
@@ -76,7 +77,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
   const hasResources = Array.isArray(post.resources) && post.resources.length > 0;
   const resources: any[] = hasResources
     ? post.resources
-    : [{ title: "Download this blog as PDF" }, { title: "Related download" }];
+    : [{ title: "Download this blog as PDF" }, { title: "Download post" }];
 
   const resourcesContent =
     resources.length > 0 ? (
@@ -129,7 +130,32 @@ export default async function SingleBlogPage({ params }: PageProps) {
       </div>
     ) : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.seoDescription || post.excerpt || undefined,
+    image: coverImage ? [coverImage] : undefined,
+    datePublished: post.publishedAt || undefined,
+    dateModified: post._updatedAt || post.publishedAt || undefined,
+    author: { "@type": "Person", name: author.name },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.svg` },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/blogs/${slug}`,
+    },
+  };
+
   return (
+    <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
     <ArticleDetail
       coverImage={coverImage}
       title={post.title}
@@ -153,6 +179,8 @@ export default async function SingleBlogPage({ params }: PageProps) {
       resourcesContent={resourcesContent}
       tricksContent={tricksContent}
       relatedBlogsContent={relatedBlogsContent}
+      monetization={post.monetization}
     />
+    </>
   );
 }

@@ -1,18 +1,16 @@
-import { adPlaceholderBlock } from './adPlaceholder'
 import { affiliateBoxBlock } from './affiliateBox'
 import { sponsorBannerBlock } from './sponsorBanner'
 import { downloadBoxBlock } from './downloadBox'
-import { newsletterBoxBlock } from './newsletterBox'
-import { ctaBoxBlock } from './ctaBox'
 
-/** Object schemas registered as Studio types so they can be inserted into Portable Text. */
+/**
+ * In-body blocks an editor can insert anywhere in the article.
+ * Scope is intentionally limited to Affiliate Box, Sponsor Banner and Download Box.
+ * Ad placeholders are controlled per-article via the document-level `monetization` field.
+ */
 export const pageBuilderBlockSchemas = [
-  adPlaceholderBlock,
   affiliateBoxBlock,
   sponsorBannerBlock,
   downloadBoxBlock,
-  newsletterBoxBlock,
-  ctaBoxBlock,
 ]
 
 /** References spread into a Portable Text array's `of` to allow inserting blocks anywhere. */
