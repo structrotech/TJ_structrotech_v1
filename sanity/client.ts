@@ -1,5 +1,5 @@
 import { createClient } from '@sanity/client'
-import imageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 
 export const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
@@ -14,7 +14,7 @@ export const client = createClient({
   token: undefined,
 })
 
-const builder = imageUrlBuilder(client)
+const builder = createImageUrlBuilder(client)
 
 /** Valid Sanity upload refs look like image-{hash}-{W}x{H}-{ext} */
 const VALID_SANITY_IMAGE_REF = /^image-[a-f0-9]+-\d+x\d+-[a-z0-9]+$/i
