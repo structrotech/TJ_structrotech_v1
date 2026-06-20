@@ -32,8 +32,8 @@ export default function AuthPage() {
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
               {isSignUp
-                ? "Join thousands of learners on StructroTech"
-                : "Sign in to continue your learning journey"}
+                ? "Join thousands of learners on StructroTech \n Authentication System Comming Soon...  This page is a placeholder Login/signup functionality is Available in a future update "
+                : "Sign in to continue your learning journey. \n Authentication System Comming Soon...  This page is a placeholder Login/signup functionality is Available in a future update "}
             </p>
           </div>
 
