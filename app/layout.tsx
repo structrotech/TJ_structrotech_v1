@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { HydrationReady } from "@/components/HydrationReady";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, SITE_NAME } from "@/lib/site";
 
 // Failsafe: if the app hasn't hydrated within a few seconds (JS blocked or
 // failed to load), reveal the framer-motion content so the page isn't empty.
@@ -23,9 +23,21 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+  title: {
+    default: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    template: "%s | StructroTech",
+  },
   description:
     "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: {
+      default: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    },
+    description:
+      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+  },
   generator: "Next.js",
   icons: {
     icon: [

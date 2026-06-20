@@ -5,8 +5,17 @@ import { CATEGORIES_QUERY, FEATURED_TRICKS_QUERY } from "@/sanity/queries";
 import { mapSanityTrick } from "@/lib/sanity-mappers";
 import { HeroSection } from "@/components/HeroSection";
 import { CategoriesSection } from "@/components/CategoriesSection";
+import type { Metadata } from "next";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: {
+    absolute: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+  },
+  description:
+    "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+};
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 

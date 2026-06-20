@@ -33,14 +33,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt || undefined;
+  const ogImage = post.coverImage ? resolveSanityImageUrl(post.coverImage) : undefined;
+  const canonicalPath = `/blogs/${slug}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
+      type: "article",
+      url: canonicalPath,
+      siteName: SITE_NAME,
       title,
       description,
-      images: post.coverImage ? [resolveSanityImageUrl(post.coverImage)] : undefined,
+      images: ogImage ? [ogImage] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }

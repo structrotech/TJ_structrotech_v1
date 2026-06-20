@@ -33,14 +33,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = trick.seoTitle || trick.question;
   const description = trick.seoDescription || trick.excerpt || undefined;
+  const ogImage = trick.coverImage ? resolveSanityImageUrl(trick.coverImage) : undefined;
+  const canonicalPath = `/interesting-tricks/${slug}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
+      type: "article",
+      url: canonicalPath,
+      siteName: SITE_NAME,
       title,
       description,
-      images: trick.coverImage ? [resolveSanityImageUrl(trick.coverImage)] : undefined,
+      images: ogImage ? [ogImage] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }

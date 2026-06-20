@@ -38,6 +38,7 @@ export const POSTS_QUERY = groq`
 export const POST_QUERY = groq`
   *[_type == "post" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     coverImage,
@@ -180,6 +181,7 @@ export const TRICKS_BY_BLOG_QUERY = groq`
 export const TRICK_QUERY = groq`
   *[_type == "interestingTrick" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     question,
     slug,
     coverImage,
